@@ -1,0 +1,6 @@
+elapsed time [min],Original 20 task [times],Original 025 task [times],selected task dynamic[times],selected task static [times],selected task dynamic[times],selected task static [times],selected task dynamic[times],selected task static [times]
+60,128,156,79,49,64,103,164,125
+120,256,248,32,60,61,119,64,103
+180,361,332,33,43,,,59,109
+240,459,468,32,76,,,61,119
+300,557,581,33,43,,,64,93

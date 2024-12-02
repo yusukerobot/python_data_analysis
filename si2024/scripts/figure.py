@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import csv
 
-filename = 'data/overview_data/selected_data_static.csv'
+filename = '../data/overview_data/selected_data_dynamic.csv'
 
 # Initialize lists to store data
 time_data = []
@@ -22,15 +22,15 @@ with open(filename, newline='') as csv_file:
 
 # Plot the data
 plt.rcParams["font.family"] = "TeX Gyre Termes"   # 使用するフォント
-plt.rcParams["font.size"] = 30
+plt.rcParams["font.size"] = 35
 
-width_cm = 12.5
+width_cm = 14.5
 height_cm = width_cm / 1.6
 width_inch = width_cm * 2 / 2.54  # Convert cm to inches
 height_inch = width_inch * 2 / 2.54
 
 plt.figure(figsize=(width_inch, height_inch))
-plt.plot(time_data, battery_data, linestyle='-', color='b')
+plt.plot(time_data, battery_data, linestyle='-', color='b', linewidth = 4)
 plt.xlabel('Time [min]')
 plt.ylabel('Battery Level [%]')
 # plt.ylim(0, 100)
