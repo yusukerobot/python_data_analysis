@@ -48,7 +48,7 @@ plt.plot(task_data, cost_charge_data, linestyle='-', color='r', linewidth=4, lab
 # plt.scatter(time_data, cost_short_data, color='b', s=20, label='Priority Short')  # 青色の散布図
 # plt.scatter(time_data, cost_charge_data, color='r', s=20, label='Priority Charge')  # 赤色の散布図
 # 軸ラベルの設定
-plt.xlabel('経路計画回数 ［回］')
+plt.xlabel('作業回数 ［回］')
 plt.ylabel('経路長 $c$ [m]')
 
 # グリッド非表示
