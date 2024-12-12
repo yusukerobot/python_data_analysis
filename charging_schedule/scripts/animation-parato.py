@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import matplotlib.animation as animation
 import csv
 
 # グラフのフォントとサイズ設定
@@ -29,21 +30,23 @@ with open(file_path, 'r', encoding='utf-8') as file:
             f1, f2 = map(float, row)
             generations[current_generation].append((f1, f2))
 
-# プロットの作成
-plt.figure(figsize=(width_inch, height_inch))
+# アニメーションの作成
+fig, ax = plt.subplots(figsize=(width_inch, height_inch))
 
-for i, (generation, points) in enumerate(generations.items()):
-    f1, f2 = zip(*points)
-    if i == 0:  # 第1世代（青丸）
-        plt.scatter(f1, f2, edgecolor='blue', label=generation, s=100)
-    elif i == len(generations) - 1:  # 最終世代（赤丸）
-        plt.scatter(f1, f2, edgecolor='red', label=generation, s=100)
-    else:  # その他の世代（黒丸塗りつぶしなし）
-        plt.scatter(f1, f2, edgecolor='black', facecolors='none', label=generation, s=100)
+def animate(i):
+    ax.clear()
+    for j, (generation, points) in enumerate(generations.items()):
+        f1, f2 = zip(*points)
+        if j < i:  # 過去の世代は青で塗りつぶし
+            ax.scatter(f1, f2, edgecolor='blue', facecolor='blue', label=generation if j == 0 else "", s=100)
+        elif j == i:  # 現在の世代は赤で塗りつぶし
+            ax.scatter(f1, f2, edgecolor='red', facecolor='red', label=generation if j == len(generations) - 1 else "", s=100)
+    
+    ax.set_xlabel("f1 [min]")
+    ax.set_ylabel("f2 [min]")
+   #  ax.grid(True)
+   #  ax.legend()
 
-plt.xlabel("f1 [min]")
-plt.ylabel("f2 [min]")
-# plt.xlim(145, 147)
-# plt.ylim(10, 30)
-plt.grid(True)
+# interval パラメータで描写時間を設定（ここでは500ミリ秒）
+ani = animation.FuncAnimation(fig, animate, frames=len(generations), interval=500, repeat=False)
 plt.show()

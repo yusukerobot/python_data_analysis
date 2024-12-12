@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 # CSVファイルのパス
-file_path = '../data/c2.csv'  # 実際のファイルパスに合わせてください
+file_path = '../data/c1.csv'  # 実際のファイルパスに合わせてください
 
 # ファイルを読み込む
 with open(file_path, 'r') as f:
@@ -22,15 +22,18 @@ for line in lines:
         is_parent = False
         continue  # 子集団のラベルをスキップ
 
-    # f1,f2 のデータを格納
-    # ヘッダー行（f1,f2）をスキップ
+    # f1, f2 のデータを格納
+    # ヘッダー行（f1, f2）をスキップ
     if ',' in line:
         # ヘッダー行をスキップ
         if 'f1' not in line:
+            columns = line.strip().split(',')
+            if len(columns) > 2:
+                columns = columns[:2]  # 最初の2列のみを残す
             if is_parent:
-                parents_data.append(line.strip())
+                parents_data.append(','.join(columns))
             else:
-                children_data.append(line.strip())
+                children_data.append(','.join(columns))
 
 # 親集団と子集団のデータフレームを作成
 # f1, f2 の列をカンマで分割して DataFrame に変換
