@@ -1,8 +1,18 @@
 import matplotlib.pyplot as plt
 import pandas as pd
+import numpy as np
 
 # CSVファイルのパス
-file_path = '../data/c1.csv'  # 実際のファイルパスに合わせてください
+file_path = '../data/c2.csv'  # 実際のファイルパスに合わせてください
+
+# 描画設定
+plt.rcParams["font.family"] = "TeX Gyre Termes"
+plt.rcParams['font.size'] = 30
+
+width_cm = 14.5
+height_cm = width_cm / 1.6
+width_inch = width_cm * 2 / 2.54
+height_inch = width_inch * 2 / 2.54
 
 # ファイルを読み込む
 with open(file_path, 'r') as f:
@@ -44,15 +54,18 @@ df_child = pd.DataFrame([list(map(float, item.split(','))) for item in children_
 # plt.figure(figsize=(8, 6))
 
 # 親集団（黒丸）
-plt.scatter(df_parent['f1'], df_parent['f2'], color='black', label='Parents', marker='o')
+plt.scatter(df_parent['f1'], df_parent['f2'], color='black', label='Parents', s=100, marker='o')
 
 # 子集団（赤丸）
-plt.scatter(df_child['f1'], df_child['f2'], color='red', label='Children', marker='o')
+plt.scatter(df_child['f1'], df_child['f2'], color='red', label='Children', s=100, marker='o')
 
 # グラフのラベル設定
-plt.xlabel('f1')
-plt.ylabel('f2')
-plt.title('Parent and Child Populations (f1 vs f2)')
+plt.xlabel('f1 [min]')
+plt.ylabel('f2 [min]')
+
+# x軸とy軸の目盛りを5刻みに設定
+# plt.xticks(np.arange(int(df['f1'].min()) // 5 * 5, int(df['f1'].max()) + 5, 5))
+# plt.yticks(np.arange(int(df['f2'].min()) // 5 * 5, int(df['f2'].max()) + 5, 5))
 
 # 凡例を表示
 plt.legend()

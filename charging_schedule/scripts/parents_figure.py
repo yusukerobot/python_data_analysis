@@ -1,37 +1,49 @@
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.ticker import MaxNLocator
 import pandas as pd
-import csv
+import matplotlib.pyplot as plt
+import numpy as np
 
-csv_file = '../data/all-1.csv'
+# ファイルのパス
+csv_file = '../data/p2.csv'
 
-# 最初の2行をスキップ
-data = pd.read_csv(csv_file, skiprows=1, sep=",")
+# CSVファイルを読み込み（header=1で2行目をヘッダとして指定）
+df = pd.read_csv(csv_file, header=1)
 
-f1 = data['f1']
-f2 = data['f2']
+# カラム名を確認
+print(df.columns)  # カラム名を表示して確認
 
+# 描画設定
 plt.rcParams["font.family"] = "TeX Gyre Termes"
-plt.rcParams['font.size'] = 25
+plt.rcParams['font.size'] = 30
 
-width_cm = 12.5
+width_cm = 14.5
 height_cm = width_cm / 1.6
 width_inch = width_cm * 2 / 2.54
 height_inch = width_inch * 2 / 2.54
 
 plt.figure(figsize=(width_inch, height_inch))
-plt.scatter(f1, f2, color='b', marker='o', facecolors='none', edgecolors='b', s=100, label="Data Points")
+
+# f1 と f2 を使って散布図を描画
+# linewidthsで丸の太さを指定
+plt.scatter(df['f1'], df['f2'], color='black', marker='o', label='Parents', s=100, linewidths=2)
+
+# 軸ラベルの設定
 plt.xlabel('f1 [min]')
 plt.ylabel('f2 [min]')
 
-# 目盛り設定、MaxNLocatorで整数表示
-plt.gca().xaxis.set_major_locator(MaxNLocator(integer=True, prune='lower'))
-plt.xticks(np.arange(int(min(f1)//10)*10, int(max(f1)//10)*10 + 10, 10))  # 10の倍数
-plt.gca().yaxis.set_major_locator(MaxNLocator(integer=True, prune='lower'))
-plt.yticks(np.arange(int(min(f2)//5)*5, int(max(f2)//5)*5 + 5, 5))  # 5の倍数
-plt.tick_params(axis='both', labelsize=20)
+# x軸とy軸の目盛りを5刻みに設定
+f1_min, f1_max = df['f1'].min(), df['f1'].max()
+f2_min, f2_max = df['f2'].min(), df['f2'].max()
+x_range = (np.floor(f1_min / 5) * 5, np.ceil(f1_max / 5) * 5)  # 5刻み
+y_range = (np.floor(f2_min / 10) * 10, np.ceil(f2_max / 10) * 10)  # 10刻み
+x_ticks = np.arange(x_range[0], x_range[1] + 5, 5)  # 5刻み
+y_ticks = np.arange(y_range[0], y_range[1] + 10, 10)  # 10刻み
 
-plt.grid(False)
+plt.xticks(x_ticks)  
+plt.yticks(y_ticks)
 
+# 凡例の設定
+plt.legend()
+
+# グラフの表示
+plt.grid(True)
 plt.show()
