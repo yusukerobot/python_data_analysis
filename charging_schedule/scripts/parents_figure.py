@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # ファイルのパス
-csv_file = '../data/p2.csv'
+csv_file = '../data/sbx_test/parents.csv'
 
 # CSVファイルを読み込み（header=1で2行目をヘッダとして指定）
 df = pd.read_csv(csv_file, header=1)
@@ -45,5 +45,5 @@ plt.yticks(y_ticks)
 plt.legend()
 
 # グラフの表示
-plt.grid(True)
+# plt.grid(True)
 plt.show()

@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 
 # CSVファイルのパス
-file_path = '../data/c2.csv'  # 実際のファイルパスに合わせてください
+file_path = '../data/sbx_test/eta20.csv'  # 実際のファイルパスに合わせてください
 
 # 描画設定
 plt.rcParams["font.family"] = "TeX Gyre Termes"

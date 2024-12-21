@@ -4,7 +4,7 @@ from matplotlib.ticker import MaxNLocator
 import pandas as pd
 import csv
 
-csv_file = '../data/g1.csv'
+csv_file = '../data/sbx_test/parents.csv'
 
 # 最初の2行をスキップ
 data = pd.read_csv(csv_file, skiprows=1, sep=",")
