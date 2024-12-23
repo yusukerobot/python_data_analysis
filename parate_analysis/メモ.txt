@@ -1,0 +1,2 @@
+input_file = '../../data/data1_first_end_pareto.csv'  # 入力CSVファイル名
+output_file = '../../data/pareto_data.csv'  # 出力CSVファイル名
