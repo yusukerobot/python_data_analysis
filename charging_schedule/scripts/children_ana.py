@@ -7,7 +7,7 @@ file_path = '../data/sbx_test/eta20.csv'  # 実際のファイルパスに合わ
 
 # 描画設定
 plt.rcParams["font.family"] = "TeX Gyre Termes"
-plt.rcParams['font.size'] = 30
+plt.rcParams['font.size'] = 25
 
 width_cm = 14.5
 height_cm = width_cm / 1.6
@@ -60,8 +60,8 @@ plt.scatter(df_parent['f1'], df_parent['f2'], color='black', label='Parents', s=
 plt.scatter(df_child['f1'], df_child['f2'], color='red', label='Children', s=100, marker='o')
 
 # グラフのラベル設定
-plt.xlabel('f1 [min]')
-plt.ylabel('f2 [min]')
+plt.xlabel('$f_1$ [min]')
+plt.ylabel('$f_2$ [min]')
 
 # x軸とy軸の目盛りを5刻みに設定
 # plt.xticks(np.arange(int(df['f1'].min()) // 5 * 5, int(df['f1'].max()) + 5, 5))
