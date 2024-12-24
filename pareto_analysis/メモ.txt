@@ -1,0 +1,7 @@
+input_file = '../../data/data1_first_end_pareto.csv'  # 入力CSVファイル名
+output_file = '../../data/pareto_data.csv'  # 出力CSVファイル名
+
+f1,f2,first_soc,front
+101.543,11.5658,100,0
+time,37.72,78.6757
+soc,69,33
