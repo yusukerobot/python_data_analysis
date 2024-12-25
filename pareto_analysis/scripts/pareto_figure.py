@@ -1,9 +1,11 @@
 import matplotlib.pyplot as plt
+from matplotlib.ticker import MultipleLocator
 
 # CSVファイルのパス
-input_file_path = '../data/pareto4.csv'
+input_file_path = '../data/pareto1.csv'
 
 # 描画設定
+plt.rcParams['mathtext.fontset'] = 'cm'
 plt.rcParams["font.family"] = "TeX Gyre Termes"
 plt.rcParams['font.size'] = 30
 
@@ -44,16 +46,26 @@ def plot_generations(input_file_path):
 
     generations = list(data.keys())
     for idx, (generation, values) in enumerate(data.items()):
+        # 世代番号を抽出（例: "第1世代" -> "1"）
+        generation_number = ''.join(filter(str.isdigit, generation))
+        label = f"Generation: {generation_number}"
+        
         if generation == generations[0]:  # 初期世代
-            plt.scatter(values["f1"], values["f2"], color='blue', marker='x', label=generation, linewidths=2, s=30)
+            plt.scatter(values["f1"], values["f2"], color='black', marker='x', label=label, linewidths=2, s=80)
         elif generation == generations[-1]:  # 最終世代
-            plt.scatter(values["f1"], values["f2"], color='red', marker='o', label=generation, linewidths=2, s=30)
-        # else:  # 中間世代
-        #     plt.scatter(values["f1"], values["f2"], color='black', marker='o', facecolors='none', linewidths=2, s=100)
+            plt.scatter(values["f1"], values["f2"], color='red', marker='o', label=label, linewidths=1, s=80, edgecolors='black')
 
     # ラベルの設定
-    plt.xlabel("f1 [min]")
-    plt.ylabel("f2 [min]")
+    plt.xlabel("$f_1$ [min]")
+    plt.ylabel("$f_2$ [min]")
+
+    # 横軸のメモリを整数値に設定
+    ax = plt.gca()
+    ax.xaxis.set_major_locator(MultipleLocator(2))  # メモリの間隔を1に設定
+
+    # 凡例を表示
+    plt.legend()
+
     plt.tight_layout()
 
     # グラフの表示
