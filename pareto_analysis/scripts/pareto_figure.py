@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 
 # CSVファイルのパス
-input_file_path = '../data/pareto2.csv'
+input_file_path = '../data/pareto4.csv'
 
 # 描画設定
 plt.rcParams["font.family"] = "TeX Gyre Termes"
@@ -45,9 +45,9 @@ def plot_generations(input_file_path):
     generations = list(data.keys())
     for idx, (generation, values) in enumerate(data.items()):
         if generation == generations[0]:  # 初期世代
-            plt.scatter(values["f1"], values["f2"], color='blue', marker='x', label=generation, linewidths=2, s=100)
+            plt.scatter(values["f1"], values["f2"], color='blue', marker='x', label=generation, linewidths=2, s=30)
         elif generation == generations[-1]:  # 最終世代
-            plt.scatter(values["f1"], values["f2"], color='red', marker='o', label=generation, linewidths=2, s=100)
+            plt.scatter(values["f1"], values["f2"], color='red', marker='o', label=generation, linewidths=2, s=30)
         # else:  # 中間世代
         #     plt.scatter(values["f1"], values["f2"], color='black', marker='o', facecolors='none', linewidths=2, s=100)
 
