@@ -31,12 +31,13 @@ def parse_csv(input_file_path):
         if line.startswith("第") and "世代" in line:
             # 新しい世代を開始
             current_generation = line
-            data[current_generation] = {"f1": [], "f2": []}
+            data[current_generation] = {"f1": [], "f2": []}  # f1, f2のみ追加
         elif line and current_generation and "," in line:
             if line.lower().startswith("f1,f2"):  # ヘッダー行をスキップ
                 continue
             try:
-                f1, f2 = map(float, line.split(","))
+                values = list(map(float, line.split(",")))
+                f1, f2 = values[0], values[1]  # f1とf2だけ使用
                 data[current_generation]["f1"].append(f1)
                 data[current_generation]["f2"].append(f2)
             except ValueError:
@@ -115,7 +116,7 @@ def animate_generations(data):
 
     # アニメーションの作成
     ani = animation.FuncAnimation(
-        fig, update, frames=len(generations) + 1, interval=120, blit=True, repeat=False  # repeat=Falseで最終世代で停止
+        fig, update, frames=len(generations) + 1, interval=150, blit=True, repeat=False  # repeat=Falseで最終世代で停止
     )
 
     # アニメーションを保存する場合
