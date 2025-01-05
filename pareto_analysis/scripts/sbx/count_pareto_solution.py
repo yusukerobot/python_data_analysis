@@ -1,7 +1,6 @@
 import os
-import glob
-import pandas as pd
 import matplotlib.pyplot as plt
+from matplotlib.ticker import MaxNLocator
 
 # 描画設定
 plt.rcParams['mathtext.fontset'] = 'cm'
@@ -15,8 +14,7 @@ width_inch = width_cm / 2.54
 height_inch = height_cm / 2.54
 
 # CSVファイルの最終世代データをカウントする関数
-def count_final_generation_data(directory_path, eta_min, eta_max, eta_step):
-    eta_values = range(eta_min, eta_max + 1, eta_step)
+def count_final_generation_data(directory_path, eta_values):
     eta_counts = {}
 
     for eta in eta_values:
@@ -25,6 +23,7 @@ def count_final_generation_data(directory_path, eta_min, eta_max, eta_step):
 
         if not os.path.exists(file_path):
             print(f"File not found: {file_path}")
+            eta_counts[eta] = 0  # データが見つからない場合は0に設定
             continue
         
         with open(file_path, 'r') as file:
@@ -58,21 +57,27 @@ def count_final_generation_data(directory_path, eta_min, eta_max, eta_step):
     return eta_counts
 
 # グラフプロット関数
-def plot_pareto_solution_counts(eta_counts):
-    eta_values = sorted(eta_counts.keys())
-    data_counts = [eta_counts[eta] for eta in eta_values]
+def plot_pareto_solution_counts(eta_counts, eta_values):
+    eta_values_sorted = sorted(eta_counts.keys())
+    data_counts = [eta_counts[eta] for eta in eta_values_sorted]
     
     # 折れ線グラフの描画
     plt.figure(figsize=(width_inch, height_inch))
-    plt.plot(eta_values, data_counts, marker='o', color='blue', label='Number of pareto solutions', linewidth=2, markersize=10)
+    plt.plot(eta_values_sorted, data_counts, marker='o', color='blue', label='Number of pareto solutions', linewidth=2, markersize=10)
 
     # 軸ラベルとタイトル
     plt.xlabel('$\eta$')
     plt.ylabel('Number of pareto solutions')
     
-    # x軸ラベルを回転して表示
-    plt.xticks(rotation=0)
+    # x軸の目盛りを指定したetaの値で表示
+    plt.xticks(eta_values, rotation=0)
     
+    # y軸の目盛りを整数に設定
+    plt.gca().yaxis.set_major_locator(MaxNLocator(integer=True))
+
+    # y軸の範囲をデータの最小値と最大値に合わせる
+    plt.ylim(min(data_counts) - 10, max(data_counts) + 10)
+
     # レイアウト調整
     plt.tight_layout()
     plt.show()
@@ -81,16 +86,26 @@ def plot_pareto_solution_counts(eta_counts):
 directory_path = "../../data/sbx/"  # ディレクトリのパス
 
 # ηの範囲を指定
-eta_min = 10  # 最小値
-eta_max = 50  # 最大値
-eta_step = 10 # ステップ数
+eta_values_manual = [1, 5, 10, 15, 20]  # 手動で指定するetaの値のリスト
 
-# 最終世代データのカウント
-eta_counts = count_final_generation_data(directory_path, eta_min, eta_max, eta_step)
+manual = True  # 手動設定する場合はTrue、CSVから自動取得する場合はFalse
 
-# カウント結果を表示
+if manual:
+    # 手動でetaの値を設定
+    eta_values = eta_values_manual
+else:
+    # 自動で計算する場合
+    eta_min = 1
+    eta_max = 20
+    eta_step = 1
+    eta_values = range(eta_min, eta_max + 1, eta_step)
+
+# 自動で各etaに対してデータのカウントを実行
+eta_counts = count_final_generation_data(directory_path, eta_values)
+
+# 最終世代データのカウント結果を表示
 for eta, count in sorted(eta_counts.items()):
     print(f"$\eta$ = {eta}: {count} unique data points")
 
 # 結果をプロット
-plot_pareto_solution_counts(eta_counts)
+plot_pareto_solution_counts(eta_counts, eta_values)

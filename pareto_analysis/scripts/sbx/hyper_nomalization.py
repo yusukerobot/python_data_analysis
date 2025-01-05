@@ -16,14 +16,21 @@ width_inch = width_cm / 2.54
 height_inch = height_cm / 2.54
 
 # データの読み込みと整形
-def load_csv_files_by_eta_range(directory_path, eta_min, eta_max, eta_step):
+def load_csv_files_by_eta_range(directory_path, eta_values=None, eta_min=None, eta_max=None, eta_step=1):
     """
     指定されたetaの範囲でCSVファイルを読み込みます。
     """
     datasets = {}
-    eta_values = range(eta_min, eta_max + 1, eta_step)
     
-    for eta in eta_values:
+    # etaの範囲を設定
+    if eta_values is not None:
+        valid_etas = eta_values  # 手動で指定されたetaのリスト
+    elif eta_min is not None and eta_max is not None:
+        valid_etas = range(eta_min, eta_max + 1, eta_step)  # 範囲指定されたeta
+    else:
+        valid_etas = None  # 制約なし
+
+    for eta in valid_etas:
         file_name = f"eta{eta}.csv"
         file_path = os.path.join(directory_path, file_name)
         if not os.path.exists(file_path):
@@ -101,13 +108,18 @@ def plot_combined_hypervolume(hv_data, line_width=3):
 # メイン処理
 directory_path = "../../data/sbx/"  # CSVファイルが格納されているディレクトリのパス
 
-# etaの範囲を指定
-eta_min = 10  # 最小値
-eta_max = 50  # 最大値
-eta_step = 10  # ステップ数
-
-# データ読み込み
-datasets = load_csv_files_by_eta_range(directory_path, eta_min, eta_max, eta_step)
+# etaの範囲を指定するか、手動で指定するか（Trueなら手動指定）
+manual_eta = True  # 手動でetaを設定する場合はTrue、それ以外は自動設定
+if manual_eta:
+    # 手動で指定するetaの値（リスト）
+    eta_values = [1, 5, 10, 15, 20]
+    datasets = load_csv_files_by_eta_range(directory_path, eta_values=eta_values)
+else:
+    # 自動でetaの範囲を指定
+    eta_min = 0  # 最小のeta値
+    eta_max = 20  # 最大のeta値
+    eta_step = 5  # ステップサイズ
+    datasets = load_csv_files_by_eta_range(directory_path, eta_min=eta_min, eta_max=eta_max, eta_step=eta_step)
 
 # f1, f2の最小値と最大値を計算
 global_f1_min = float('inf')

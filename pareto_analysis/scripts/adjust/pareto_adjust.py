@@ -4,7 +4,7 @@ import pandas as pd
 input_file_path = '../../data/raw/sbx/eta50.csv'
 
 # 新しいCSVファイルのパス
-output_file_path = '../../data/sbx/eta50.csv'
+output_file_path = '../../data/pareto1.csv'
 
 def process_csv(input_path, output_path):
     # 新しいCSV内容を保存するリスト

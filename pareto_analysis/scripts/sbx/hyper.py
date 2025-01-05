@@ -16,9 +16,10 @@ width_inch = width_cm / 2.54
 height_inch = height_cm / 2.54
 
 # データの読み込みと整形
-def load_multiple_csv_files(directory_path, min_eta=None, max_eta=None, step=1, file_pattern="eta*.csv"):
+def load_multiple_csv_files(directory_path, eta_values=None, min_eta=None, max_eta=None, step=1, file_pattern="eta*.csv"):
     """
     指定されたディレクトリ内のファイルパターンに一致するCSVファイルを読み込みます。
+    - eta_values: 手動で指定したeta値のリスト
     - min_eta: 読み込む最小eta値
     - max_eta: 読み込む最大eta値
     - step: 読み込むetaの間隔
@@ -26,8 +27,10 @@ def load_multiple_csv_files(directory_path, min_eta=None, max_eta=None, step=1, 
     file_paths = glob.glob(os.path.join(directory_path, file_pattern))
     datasets = {}
 
-    # 読み込むeta値の範囲を定義
-    if min_eta is not None and max_eta is not None:
+    # eta値の決定
+    if eta_values is not None:
+        valid_etas = set(eta_values)
+    elif min_eta is not None and max_eta is not None:
         valid_etas = set(range(min_eta, max_eta + 1, step))
     else:
         valid_etas = None  # 範囲を指定しない場合
@@ -92,8 +95,8 @@ def plot_combined_hypervolume(hv_data, line_width=3):
     - line_width: 線の太さ（デフォルトは3）
     """
     # 論文でよく使われる色
-    colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b']
-    linestyles = ['--', '-.', ':', '--', '-.', ':']
+    colors = ['red', 'blue', 'green', 'orange', 'purple', '#8c564b']
+    linestyles = ['-', '--', '-.', '--', '-.', '--']
 
     # etaの数値を基にファイル名をソート（etaの数字が小さい順）
     sorted_hv_data = dict(sorted(hv_data.items(), key=lambda item: int(item[0].split('=')[-1].strip())))
@@ -108,7 +111,12 @@ def plot_combined_hypervolume(hv_data, line_width=3):
         )
 
     plt.xlabel("Generation")
-    plt.ylabel("Hypervolume")
+    plt.ylabel("Hypervolume [$\mathrm{min}^2$]")
+    
+    # 横軸の目盛り設定
+    # 1から100まで、20の倍数で目盛りを設定
+    plt.xticks(np.arange(1, 101, 20))  # 横軸の目盛り
+
     plt.legend(loc="best")
     plt.tight_layout()
     plt.show()
@@ -116,23 +124,30 @@ def plot_combined_hypervolume(hv_data, line_width=3):
 # メイン処理
 directory_path = "../../data/sbx/"  # CSVファイルが格納されているディレクトリのパス
 
-# 読み込むファイルの範囲を指定
-min_eta = 0  # 最小のeta値
-max_eta = 20  # 最大のeta値
-step = 5      # ステップサイズ
+# etaの指定方法を手動で設定する場合（Trueなら手動指定）
+manual_eta = True  # 手動でetaを設定する場合はTrue、それ以外は自動設定
+if manual_eta:
+    # 手動で指定するetaの値（リスト）
+    eta_values = [1, 5, 10, 15, 20,]
+    datasets = load_multiple_csv_files(directory_path, eta_values=eta_values)
+else:
+    # 自動でetaの範囲を指定
+    min_eta = 1  # 最小のeta値
+    max_eta = 20  # 最大のeta値
+    step = 1      # ステップサイズ
+    datasets = load_multiple_csv_files(directory_path, min_eta=min_eta, max_eta=max_eta, step=step)
 
-# データ読み込み
-datasets = load_multiple_csv_files(directory_path, min_eta, max_eta, step)
-
-# すべてのデータから共通の参照点を計算
+# すべてのデータから共通の参照点を計算（最初に計算し、計算後は変更しない）
 global_f1_max = float('-inf')
 global_f2_max = float('-inf')
 
+# 各ファイルの最大f1, f2値を計算
 for file, generations in datasets.items():
     for gen, df in generations.items():
         global_f1_max = max(global_f1_max, df["f1"].max())
         global_f2_max = max(global_f2_max, df["f2"].max())
 
+# 参照点を固定（計算後に変更しない）
 reference_point = [global_f1_max + 1, global_f2_max + 1]
 
 # 各ファイルのハイパーボリュームを計算
