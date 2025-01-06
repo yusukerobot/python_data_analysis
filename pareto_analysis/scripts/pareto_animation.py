@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
 # CSVファイルのパス
-input_file_path = '../data/sbx_custom.csv'
+input_file_path = '../data/sbx/eta20.csv'
 
 # 描画設定
 plt.rcParams["font.family"] = "TeX Gyre Termes"  # Change to a font that supports a wide range of characters

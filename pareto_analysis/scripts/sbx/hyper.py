@@ -128,7 +128,7 @@ directory_path = "../../data/sbx/"  # CSVファイルが格納されているデ
 manual_eta = True  # 手動でetaを設定する場合はTrue、それ以外は自動設定
 if manual_eta:
     # 手動で指定するetaの値（リスト）
-    eta_values = [1, 5, 10, 15, 20,]
+    eta_values = [1, 5, 10, 15, 20]
     datasets = load_multiple_csv_files(directory_path, eta_values=eta_values)
 else:
     # 自動でetaの範囲を指定
@@ -149,6 +149,8 @@ for file, generations in datasets.items():
 
 # 参照点を固定（計算後に変更しない）
 reference_point = [global_f1_max + 1, global_f2_max + 1]
+reference_point = [140, 50]
+print(f"Reference Point: {reference_point}")  # 参照点を出力
 
 # 各ファイルのハイパーボリュームを計算
 hv_data = {}
