@@ -89,10 +89,10 @@ def get_final_generation_data(directory_path, file_pattern="eta*.csv", eta_value
 
     return final_generation_data
 
-# 散布図を描画する関数
+# 散布図を描画する関数（通常のグラフ）
 def plot_generation_scatter(initial_data, final_generation_data):
     colors = ['red', 'blue', 'green']
-    markers = ['o', 'o', 'o']
+    markers = ['o', '^', 'x']
 
     plt.figure(figsize=(width_inch, height_inch))
 
@@ -105,6 +105,7 @@ def plot_generation_scatter(initial_data, final_generation_data):
             label="Initial generation",
             color='black',
             marker='x',
+            linewidths=2,
             s=80
         )
 
@@ -118,6 +119,7 @@ def plot_generation_scatter(initial_data, final_generation_data):
             label=f"Pareto solution ($\eta$ = {eta})", 
             color=colors[idx % len(colors)], 
             marker=markers[idx % len(markers)], 
+            linewidths=1,
             s=80, 
             edgecolors='black'
         )
@@ -127,15 +129,74 @@ def plot_generation_scatter(initial_data, final_generation_data):
     plt.ylabel("$f_2$ [min]")
 
     # 軸範囲を設定
+    plt.xlim(103, 118)
     plt.ylim(10, 24)
 
     # 軸目盛りを整数に設定
+    plt.xticks(np.arange(103, 118, 2))  # Y軸の目盛りを10から24まで2刻みで設定
     plt.yticks(np.arange(11, 24, 2))  # Y軸の目盛りを10から24まで2刻みで設定
 
     # 凡例
     plt.legend(loc="best")
     plt.tight_layout()
     plt.show()
+
+# 散布図を描画する関数（time_countによる色分け）
+def plot_generation_scatter_with_time(final_generation_data):
+    # time_countに対応する色とマーカーを設定
+    time_count_to_color_marker = {
+        1: {'color': 'red', 'marker': 'o'},   # time_count == 1 → red, circle
+        2: {'color': 'blue', 'marker': '^'},  # time_count == 2 → blue, triangle
+        3: {'color': 'green', 'marker': 'x'}   # time_count == 3 → green, x
+    }
+
+    plt.figure(figsize=(width_inch, height_inch))
+
+    # 描画順をtime_countの昇順で並べ替える
+    time_counts_sorted = sorted(time_count_to_color_marker.keys())
+
+    # 各etaの最終世代データを描画
+    for eta, data in sorted(final_generation_data.items()):
+        f1_values = [point[0] for point in data]
+        f2_values = [point[1] for point in data]
+        time_count_values = [int(point[2]) for point in data]  # time_countを整数として取得
+
+        # time_countに基づいて色とマーカーを指定して描画
+        for time_count in time_counts_sorted:
+            color_marker = time_count_to_color_marker.get(time_count)
+            if color_marker:
+                # 時間カウントに基づいてマーカーと色を決定
+                f1_values_for_time_count = [f1 for f1, time in zip(f1_values, time_count_values) if time == time_count]
+                f2_values_for_time_count = [f2 for f2, time in zip(f2_values, time_count_values) if time == time_count]
+
+                # time_countに基づいて描画
+                plt.scatter(f1_values_for_time_count, f2_values_for_time_count, 
+                            color=color_marker['color'], 
+                            marker=color_marker['marker'],
+                            label=f"Number of charging: {time_count}",
+                            s=80, linewidths=1, edgecolors='black')
+
+    # 軸ラベル
+    plt.xlabel("$f_1$ [min]")
+    plt.ylabel("$f_2$ [min]")
+
+    # 軸範囲を設定
+    plt.xlim(103, 118)
+    plt.ylim(10, 24)
+
+    # 軸目盛りを整数に設定
+    plt.xticks(np.arange(103, 118, 2))  # X軸の目盛りを103から118まで2刻みで設定
+    plt.yticks(np.arange(11, 24, 2))  # Y軸の目盛りを11から24まで2刻みで設定
+
+    # 凡例（time_countの小さい順に並べ替えられた状態）
+    handles, labels = plt.gca().get_legend_handles_labels()
+    # 重複した凡例を削除
+    by_label = dict(zip(labels, handles))
+    plt.legend(by_label.values(), by_label.keys(), loc="best")
+    
+    plt.tight_layout()
+    plt.show()
+
 
 # メイン処理
 directory_path = "../../data/sbx/"  # ディレクトリのパス
@@ -155,5 +216,8 @@ else:
 first_file = sorted(glob.glob(os.path.join(directory_path, file_pattern)))[0]
 initial_data = get_initial_generation_data(first_file)
 
-# 散布図を描画
+# 1つ目のグラフ（通常の散布図）
 plot_generation_scatter(initial_data, final_generation_data)
+
+# 2つ目のグラフ（time_countによる色分けをしたグラフ）
+plot_generation_scatter_with_time(final_generation_data)

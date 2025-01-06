@@ -8,7 +8,7 @@ plt.rcParams["font.family"] = "TeX Gyre Termes"
 plt.rcParams['font.size'] = 30
 
 # グラフサイズの設定
-width_cm = 14.5
+width_cm = 16.5
 height_cm = width_cm / 1.6
 width_inch = width_cm / 2.54
 height_inch = height_cm / 2.54
@@ -57,7 +57,7 @@ def count_final_generation_data(directory_path, eta_values):
     return eta_counts
 
 # グラフプロット関数
-def plot_pareto_solution_counts(eta_counts, eta_values):
+def plot_pareto_solution_counts(eta_counts, eta_values, y_min=None, y_max=None, y_step=None):
     eta_values_sorted = sorted(eta_counts.keys())
     data_counts = [eta_counts[eta] for eta in eta_values_sorted]
     
@@ -75,8 +75,17 @@ def plot_pareto_solution_counts(eta_counts, eta_values):
     # y軸の目盛りを整数に設定
     plt.gca().yaxis.set_major_locator(MaxNLocator(integer=True))
 
-    # y軸の範囲をデータの最小値と最大値に合わせる
-    plt.ylim(min(data_counts) - 10, max(data_counts) + 10)
+    # y軸の範囲を指定する（手動設定の場合）
+    if y_min is not None and y_max is not None:
+        plt.ylim(y_min, y_max)
+    
+    # y軸の目盛りのステップ数を指定（y_stepがNoneでない場合）
+    if y_step is not None:
+        plt.gca().yaxis.set_major_locator(MaxNLocator(integer=True, prune='lower', steps=[y_step]))
+    
+    # 自動設定の場合はy軸の範囲をデータに基づいて設定
+    elif y_min is None and y_max is None:
+        plt.ylim(min(data_counts) - 10, max(data_counts) + 10)
 
     # レイアウト調整
     plt.tight_layout()
@@ -107,5 +116,9 @@ eta_counts = count_final_generation_data(directory_path, eta_values)
 for eta, count in sorted(eta_counts.items()):
     print(f"$\eta$ = {eta}: {count} unique data points")
 
-# 結果をプロット
-plot_pareto_solution_counts(eta_counts, eta_values)
+# 最小値、最大値、ステップを設定して結果をプロット
+y_min = None  # y軸の最小値 (Noneの場合自動設定)
+y_max = None  # y軸の最大値 (Noneの場合自動設定)
+y_step = 10  # y軸のステップ (指定する場合)
+
+plot_pareto_solution_counts(eta_counts, eta_values, y_min, y_max, y_step)

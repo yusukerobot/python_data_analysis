@@ -10,7 +10,7 @@ plt.rcParams["font.family"] = "TeX Gyre Termes"  # フォント設定
 plt.rcParams['font.size'] = 30
 
 # グラフサイズの設定
-width_cm = 14.5
+width_cm = 16.5
 height_cm = width_cm / 1.6
 width_inch = width_cm / 2.54
 height_inch = height_cm / 2.54
@@ -112,10 +112,10 @@ def plot_combined_hypervolume(hv_data, line_width=3):
 
     plt.xlabel("Generation")
     plt.ylabel("Hypervolume [$\mathrm{min}^2$]")
-    
-    # 横軸の目盛り設定
-    # 1から100まで、20の倍数で目盛りを設定
-    plt.xticks(np.arange(1, 101, 20))  # 横軸の目盛り
+
+    # 任意で指定した横軸の目盛り
+    custom_xticks = [1, 20, 40, 60, 80, 100]  # ここで希望する目盛りを指定
+    plt.xticks(custom_xticks)  # 横軸の目盛りをカスタマイズ
 
     plt.legend(loc="best")
     plt.tight_layout()

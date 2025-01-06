@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import MultipleLocator
 
 # CSVファイルのパス
-input_file_path = '../data/sbx/eta2.csv'
+input_file_path = '../data/sbx_custom.csv'
 
 # 描画設定
 plt.rcParams['mathtext.fontset'] = 'cm'
@@ -11,7 +11,7 @@ plt.rcParams["font.family"] = "TeX Gyre Termes"
 plt.rcParams['font.size'] = 30
 
 # グラフサイズの設定
-width_cm = 14.5
+width_cm = 16.5
 height_cm = width_cm / 1.6
 width_inch = width_cm * 2 / 2.54
 height_inch = width_inch * 2 / 2.54
