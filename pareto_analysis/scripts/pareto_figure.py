@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import MultipleLocator
 
 # CSVファイルのパス
-input_file_path = '../data/sbx/eta20.csv'
+input_file_path = '../data/sbx/eta1.csv'
 
 # 描画設定
 plt.rcParams['mathtext.fontset'] = 'cm'

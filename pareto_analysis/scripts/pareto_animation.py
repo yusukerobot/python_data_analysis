@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
 # CSVファイルのパス
-input_file_path = '../data/sbx/eta20.csv'
+input_file_path = '../data/sbx/eta1.csv'
 
 # 描画設定
 plt.rcParams["font.family"] = "TeX Gyre Termes"  # Change to a font that supports a wide range of characters
@@ -61,6 +61,11 @@ def animate_generations(data):
     # グラフの範囲を設定（f1は最小値0にする）
     ax.set_xlim(min_f1 - 1, max_f1 + 1)  # f1の範囲
     ax.set_ylim(min_f2 - 0.5, max_f2 + 1)  # f2の範囲
+
+     # 軸範囲を設定
+    plt.xlim(103, 118)
+    plt.ylim(10, 24)
+    
     ax.set_xlabel("$f_1$ [min]")
     ax.set_ylabel("$f_2$ [min]")  # 軸ラベルの設定
 

@@ -128,7 +128,7 @@ directory_path = "../../data/sbx/"  # CSVファイルが格納されているデ
 manual_eta = True  # 手動でetaを設定する場合はTrue、それ以外は自動設定
 if manual_eta:
     # 手動で指定するetaの値（リスト）
-    eta_values = [1, 5, 10, 15, 20]
+    eta_values = [1]
     datasets = load_multiple_csv_files(directory_path, eta_values=eta_values)
 else:
     # 自動でetaの範囲を指定

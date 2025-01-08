@@ -206,7 +206,7 @@ file_pattern = "eta*.csv"          # 読み込むファイルのパターン
 manual_eta = True  # 手動でetaを設定する場合はTrue、それ以外は自動設定
 if manual_eta:
     # 手動で指定するetaの値（リスト）
-    eta_values = [11, 20]
+    eta_values = [1, 20]
     final_generation_data = get_final_generation_data(directory_path, file_pattern, eta_values=eta_values)
 else:
     print("Eta range specification is not supported for this script.")

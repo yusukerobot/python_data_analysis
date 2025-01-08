@@ -97,7 +97,7 @@ directory_path = "../../data/mutation/"  # ディレクトリのパス
 # ηの範囲を指定
 eta_values_manual = [1, 5, 10, 15, 20]  # 手動で指定するetaの値のリスト
 
-manual = False  # 手動設定する場合はTrue、CSVから自動取得する場合はFalse
+manual = True  # 手動設定する場合はTrue、CSVから自動取得する場合はFalse
 
 if manual:
     # 手動でetaの値を設定
@@ -119,6 +119,6 @@ for eta, count in sorted(eta_counts.items()):
 # 最小値、最大値、ステップを設定して結果をプロット
 y_min = None  # y軸の最小値 (Noneの場合自動設定)
 y_max = None  # y軸の最大値 (Noneの場合自動設定)
-y_step = 10  # y軸のステップ (指定する場合)
+y_step = 5  # y軸のステップ (指定する場合)
 
 plot_pareto_solution_counts(eta_counts, eta_values, y_min, y_max, y_step)
