@@ -1,7 +1,7 @@
 import pandas as pd
 
 # CSVファイルを読み込む
-file_path = '../data/goal_monitoring_data.csv'  # CSVファイルのパス
+file_path = '../data/ex2.csv'  # CSVファイルのパス
 data = pd.read_csv(file_path)
 
 # 経過時間、バッテリー充電率を取得
