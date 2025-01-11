@@ -88,7 +88,7 @@ def calculate_hypervolume(points, reference_point):
     return hypervolume
 
 # グラフプロット用の設定
-def plot_combined_hypervolume(hv_data, line_width=3):
+def plot_combined_hypervolume(hv_data, line_width=4):
     """
     複数ファイルのハイパーボリューム変化を1つのグラフにまとめてプロットします。
     - hv_data: ファイル名とハイパーボリューム変化の辞書
@@ -128,7 +128,7 @@ directory_path = "../../data/sbx/"  # CSVファイルが格納されているデ
 manual_eta = True  # 手動でetaを設定する場合はTrue、それ以外は自動設定
 if manual_eta:
     # 手動で指定するetaの値（リスト）
-    eta_values = [1]
+    eta_values = [1, 5, 10, 15, 20]
     datasets = load_multiple_csv_files(directory_path, eta_values=eta_values)
 else:
     # 自動でetaの範囲を指定

@@ -119,7 +119,7 @@ def plot_generation_scatter(initial_data, final_generation_data):
             label=f"Pareto solution ($\eta$ = {eta})", 
             color=colors[idx % len(colors)], 
             marker=markers[idx % len(markers)], 
-            linewidths=1,
+            linewidths=2,
             s=80, 
             edgecolors='black'
         )
@@ -137,7 +137,7 @@ def plot_generation_scatter(initial_data, final_generation_data):
     plt.yticks(np.arange(11, 24, 2))  # Y軸の目盛りを10から24まで2刻みで設定
 
     # 凡例
-    plt.legend(loc="best")
+    # plt.legend(loc="best")
     plt.tight_layout()
     plt.show()
 
@@ -206,7 +206,7 @@ file_pattern = "eta*.csv"          # 読み込むファイルのパターン
 manual_eta = True  # 手動でetaを設定する場合はTrue、それ以外は自動設定
 if manual_eta:
     # 手動で指定するetaの値（リスト）
-    eta_values = [1, 20]
+    eta_values = [20]
     final_generation_data = get_final_generation_data(directory_path, file_pattern, eta_values=eta_values)
 else:
     print("Eta range specification is not supported for this script.")

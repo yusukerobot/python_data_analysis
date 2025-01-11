@@ -8,7 +8,7 @@ plt.rcParams["font.family"] = "TeX Gyre Termes"
 plt.rcParams['font.size'] = 30
 
 # グラフサイズの設定
-width_cm = 16.5
+width_cm = 14.5
 height_cm = width_cm / 1.6
 width_inch = width_cm / 2.54
 height_inch = height_cm / 2.54
@@ -97,7 +97,7 @@ directory_path = "../../data/sbx/"  # ディレクトリのパス
 # ηの範囲を指定
 eta_values_manual = [1, 5, 10, 15, 20]  # 手動で指定するetaの値のリスト
 
-manual = False  # 手動設定する場合はTrue、CSVから自動取得する場合はFalse
+manual = True  # 手動設定する場合はTrue、CSVから自動取得する場合はFalse
 
 if manual:
     # 手動でetaの値を設定
