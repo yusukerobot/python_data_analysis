@@ -12,10 +12,10 @@ width_inch = width_cm * 2 / 2.54
 height_inch = width_inch * 2 / 2.54
 
 # パラメータ設定
-etas = [1, 2, 5, 10]  # etaの異なる値
+etas = [1, 5, 10, 15, 20]  # etaの異なる値
 u_values = np.linspace(0, 1, 500)  # uの値は0から1までの範囲で500分割
-line_styles = ['-', '--', '-.', ':']  # 異なる線のスタイル
-colors = ['blue', 'green', 'red', 'purple']  # 明るい色の設定
+line_styles = ['-', '--', '-.', ':', '--']  # 異なる線のスタイル
+colors = ['blue', 'green', 'red', 'orange', 'purple']  # 明るい色の設定
 linewidth = 3  # 線の太さ
 
 # グラフの描画

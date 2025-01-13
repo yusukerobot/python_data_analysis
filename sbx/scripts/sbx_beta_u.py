@@ -15,7 +15,7 @@ height_inch = width_inch * 2 / 2.54  # cmからインチに変換
 u = np.linspace(0, 1, 500)
 
 # いくつかのetaの値
-eta_values = [5, 10, 20, 50]
+eta_values = [1, 5, 10, 15, 20]
 
 # グラフのサイズを設定
 plt.figure(figsize=(width_inch, height_inch))  # 指定されたサイズで設定
@@ -25,26 +25,32 @@ for eta in eta_values:
     beta = np.where(u <= 0.5, (2 * u) ** (1 / (eta + 1)), (1 / (2 * (1 - u))) ** (1 / (eta + 1)))
     
     # etaに基づいて色と線種を変更
-    if eta == 5:
+    if eta == 1:
         color = 'r'  # 赤
         linestyle = '--'  # 破線
-    elif eta == 10:
+    elif eta == 5:
         color = 'g'  # 緑
         linestyle = ':'  # 点線
-    elif eta == 20:
+    elif eta == 10:
         color = 'b'  # 青
         linestyle = '-'  # 実線
-    elif eta == 50:
-        color = 'm'  # マゼンタ
+    elif eta == 15:
+        color = 'orange'  # マゼンタ
         linestyle = '-.'  # 一点差線
+    elif eta == 20:
+        color = 'm'  # マゼンタ
+        linestyle = ':'  # 一点差線
 
     # プロット
     plt.plot(u, beta, label=f'$\eta$ = {eta}', color=color, linestyle=linestyle, linewidth=3)
 
 # グラフのタイトルとラベル
-plt.xlabel('$u$', fontsize=35)
-plt.ylabel(r'$\beta$', fontsize=35)
+plt.ylim(0, 2.0)
+plt.yticks(np.arange(0.0, 2.1, 0.5))
+
+plt.xlabel('$u$')
+plt.ylabel(r'$\beta$')
 plt.grid(True)
-plt.legend(fontsize=30)
+plt.legend()
 
 plt.show()
