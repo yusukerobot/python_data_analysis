@@ -220,4 +220,4 @@ initial_data = get_initial_generation_data(first_file)
 plot_generation_scatter(initial_data, final_generation_data)
 
 # 2つ目のグラフ（time_countによる色分けをしたグラフ）
-plot_generation_scatter_with_time(final_generation_data)
+# plot_generation_scatter_with_time(final_generation_data)

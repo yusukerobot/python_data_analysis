@@ -117,8 +117,8 @@ for eta, count in sorted(eta_counts.items()):
     print(f"$\eta$ = {eta}: {count} unique data points")
 
 # 最小値、最大値、ステップを設定して結果をプロット
-y_min = None  # y軸の最小値 (Noneの場合自動設定)
-y_max = None  # y軸の最大値 (Noneの場合自動設定)
+y_min = 69  # y軸の最小値 (Noneの場合自動設定)
+y_max = 150  # y軸の最大値 (Noneの場合自動設定)
 y_step = 5  # y軸のステップ (指定する場合)
 
 plot_pareto_solution_counts(eta_counts, eta_values, y_min, y_max, y_step)
