@@ -4,9 +4,9 @@ from matplotlib.ticker import FormatStrFormatter
 
 # 描画設定
 plt.rcParams["font.family"] = "TeX Gyre Termes"
-plt.rcParams['font.size'] = 30
+plt.rcParams['font.size'] = 40
 
-width_cm = 14.5
+width_cm = 16.5
 height_cm = width_cm / 1.6
 width_inch = width_cm * 2 / 2.54
 height_inch = width_inch * 2 / 2.54
@@ -15,8 +15,8 @@ height_inch = width_inch * 2 / 2.54
 etas = [1, 5, 10, 15, 20]  # etaの異なる値
 u_values = np.linspace(0, 1, 500)  # uの値は0から1までの範囲で500分割
 line_styles = ['-', '--', '-.', ':', '--']  # 異なる線のスタイル
-colors = ['blue', 'green', 'red', 'orange', 'purple']  # 明るい色の設定
-linewidth = 3  # 線の太さ
+colors = ['red', 'blue', 'green', 'orange', 'purple']  # 明るい色の設定
+linewidth = 5  # 線の太さ
 
 # グラフの描画
 plt.figure(figsize=(8, 6))
@@ -34,7 +34,7 @@ for i, eta in enumerate(etas):
 # グラフの設定
 plt.xlabel('$u$')
 plt.ylabel('$\delta$')
-plt.legend()
+plt.legend(fontsize=32)
 plt.grid(True)
 
 # 縦軸の目盛りを小数点第1位までに設定

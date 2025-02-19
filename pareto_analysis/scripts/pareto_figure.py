@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MultipleLocator
+import numpy as np
 
 # CSVファイルのパス
 input_file_path = '../data/sbx/eta1.csv'
@@ -8,7 +9,7 @@ input_file_path = '../data/sbx/eta1.csv'
 # 描画設定
 plt.rcParams['mathtext.fontset'] = 'cm'
 plt.rcParams["font.family"] = "TeX Gyre Termes"
-plt.rcParams['font.size'] = 30
+plt.rcParams['font.size'] = 55
 
 # グラフサイズの設定
 width_cm = 16.5
@@ -71,25 +72,27 @@ def plot_generations(generations):
                 color='black', marker='x', label=f'Initial Generation',
                 linewidths=2, s=80)  # 初期世代は黒のバツ
     plt.scatter(final_generation["f1"], final_generation["f2"],
-                color='red', marker='o', label=f'Generation: {final_generation_label}',
+                color='red', marker='o', label=f'Pareto Solution',
                 linewidths=2, s=80, edgecolors='black')  # 最終世代は赤の丸
+    plt.xlim(103, 118)
+    plt.ylim(10, 24)
     plt.xlabel("$f_1$ [min]")
     plt.ylabel("$f_2$ [min]")
-    plt.tight_layout()
-    ax = plt.gca()
-    ax.xaxis.set_major_locator(MultipleLocator(2))
+    # ax = plt.gca()
+    # ax.xaxis.set_major_locator(MultipleLocator(2))
+
+    # 軸目盛りを整数に設定
+    plt.xticks(np.arange(103, 118, 4))  # Y軸の目盛りを10から24まで2刻みで設定
+    plt.yticks(np.arange(11, 24, 4))  # Y軸の目盛りを10から24まで2刻みで設定
     plt.legend()
+    plt.tight_layout()
     plt.show()
 
     # グラフ2: 初期世代と最終世代を time_count ごとに色分けしてプロット
     plt.figure(figsize=(width_inch, height_inch))
-    colors = {1: 'blue', 2: 'green', 3: 'orange'}
+    colors = {1: 'red', 2: 'blue', 3: 'green'}
     labels = {1: "Charging number: 1", 2: "Charging number: 2", 3: "Charging number: 3"}
-
-    # 初期世代は time_count ごとに区別せず黒のバツでプロット
-    plt.scatter(initial_generation["f1"], initial_generation["f2"],
-                color='black', marker='x', label=f'Initial Generation',
-                linewidths=2, s=80)  # 初期世代は黒のバツ
+    markers = {1: 'o', 2: '^', 3: 'x'}
 
     # 最終世代のデータを time_count ごとに色分けしてプロット
     for time_val, group_data in final_generation.groupby("time_count"):
@@ -97,14 +100,21 @@ def plot_generations(generations):
         color = colors.get(time_val, 'gray')
         plt.scatter(group_data["f1"], group_data["f2"],
                     color=color, label=f"{labels.get(time_val, 'Other')}",
-                    marker='o', linewidths=2, s=80, edgecolors='black')
+                    marker=markers.get(time_val, 'o'), linewidths=2, s=80, edgecolors='black')
     
     plt.xlabel("$f_1$ [min]")
     plt.ylabel("$f_2$ [min]")
+    # ax = plt.gca()
+    # ax.xaxis.set_major_locator(MultipleLocator(2))
+    # 軸範囲を設定
+    plt.xlim(103, 118)
+    plt.ylim(10, 24)
+
+    # 軸目盛りを整数に設定
+    plt.xticks(np.arange(103, 118, 4))  # Y軸の目盛りを10から24まで2刻みで設定
+    plt.yticks(np.arange(11, 24, 4))  # Y軸の目盛りを10から24まで2刻みで設定
     plt.legend()
     plt.tight_layout()
-    ax = plt.gca()
-    ax.xaxis.set_major_locator(MultipleLocator(2))
     plt.show()
 
 # 実行

@@ -6,7 +6,7 @@ import numpy as np
 # 描画設定
 plt.rcParams['mathtext.fontset'] = 'cm'
 plt.rcParams["font.family"] = "TeX Gyre Termes"
-plt.rcParams['font.size'] = 30
+plt.rcParams['font.size'] = 45
 
 # グラフサイズの設定
 width_cm = 16.5
@@ -134,7 +134,7 @@ def plot_generation_scatter(initial_data, final_generation_data):
 
     # 軸目盛りを整数に設定
     plt.xticks(np.arange(103, 118, 2))  # Y軸の目盛りを10から24まで2刻みで設定
-    plt.yticks(np.arange(11, 24, 2))  # Y軸の目盛りを10から24まで2刻みで設定
+    plt.yticks(np.arange(11, 24, 4))  # Y軸の目盛りを10から24まで2刻みで設定
 
     # 凡例
     # plt.legend(loc="best")
@@ -186,7 +186,7 @@ def plot_generation_scatter_with_time(final_generation_data):
 
     # 軸目盛りを整数に設定
     plt.xticks(np.arange(103, 118, 2))  # X軸の目盛りを103から118まで2刻みで設定
-    plt.yticks(np.arange(11, 24, 2))  # Y軸の目盛りを11から24まで2刻みで設定
+    plt.yticks(np.arange(11, 24, 4))  # Y軸の目盛りを11から24まで2刻みで設定
 
     # 凡例（time_countの小さい順に並べ替えられた状態）
     handles, labels = plt.gca().get_legend_handles_labels()

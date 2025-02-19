@@ -7,13 +7,13 @@ import numpy as np
 # 描画設定
 plt.rcParams['mathtext.fontset'] = 'cm'
 plt.rcParams["font.family"] = "TeX Gyre Termes"  # フォント設定
-plt.rcParams['font.size'] = 30
+plt.rcParams['font.size'] = 40
 
 # グラフサイズの設定
-width_cm = 16.5
+width_cm = 14.5
 height_cm = width_cm / 1.6
-width_inch = width_cm / 2.54
-height_inch = height_cm / 2.54
+width_inch = width_cm * 2 / 2.54
+height_inch = height_cm * 2 / 2.54
 
 # データの読み込みと整形
 def load_multiple_csv_files(directory_path, eta_values=None, min_eta=None, max_eta=None, step=1, file_pattern="eta*.csv"):
@@ -117,7 +117,7 @@ def plot_combined_hypervolume(hv_data, line_width=4):
     custom_xticks = [1, 20, 40, 60, 80, 100]  # ここで希望する目盛りを指定
     plt.xticks(custom_xticks)  # 横軸の目盛りをカスタマイズ
 
-    plt.legend(loc="best")
+    plt.legend(loc="best", fontsize=35)
     plt.tight_layout()
     plt.show()
 
@@ -128,7 +128,7 @@ directory_path = "../../data/sbx/"  # CSVファイルが格納されているデ
 manual_eta = True  # 手動でetaを設定する場合はTrue、それ以外は自動設定
 if manual_eta:
     # 手動で指定するetaの値（リスト）
-    eta_values = [1, 5, 10, 15, 20]
+    eta_values = [5, 10, 15, 20]
     datasets = load_multiple_csv_files(directory_path, eta_values=eta_values)
 else:
     # 自動でetaの範囲を指定

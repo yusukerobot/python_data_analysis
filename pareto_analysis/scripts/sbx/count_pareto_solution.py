@@ -63,7 +63,7 @@ def plot_pareto_solution_counts(eta_counts, eta_values, y_min=None, y_max=None, 
     
     # 折れ線グラフの描画
     plt.figure(figsize=(width_inch, height_inch))
-    plt.plot(eta_values_sorted, data_counts, marker='o', color='blue', label='Number of pareto solutions', linewidth=2, markersize=10)
+    plt.plot(eta_values_sorted, data_counts, marker='o', color='blue', label='Number of pareto solutions', linewidth=5, markersize=15)
 
     # 軸ラベルとタイトル
     plt.xlabel('$\eta$')
@@ -81,7 +81,8 @@ def plot_pareto_solution_counts(eta_counts, eta_values, y_min=None, y_max=None, 
     
     # y軸の目盛りのステップ数を指定（y_stepがNoneでない場合）
     if y_step is not None:
-        plt.gca().yaxis.set_major_locator(MaxNLocator(integer=True, prune='lower', steps=[y_step]))
+        plt.yticks(range(y_min, y_max, y_step))
+        # plt.gca().yaxis.set_major_locator(MaxNLocator(integer=True, prune='lower', steps=[y_step]))
     
     # 自動設定の場合はy軸の範囲をデータに基づいて設定
     elif y_min is None and y_max is None:
@@ -95,7 +96,7 @@ def plot_pareto_solution_counts(eta_counts, eta_values, y_min=None, y_max=None, 
 directory_path = "../../data/sbx/"  # ディレクトリのパス
 
 # ηの範囲を指定
-eta_values_manual = [1, 5, 10, 15, 20]  # 手動で指定するetaの値のリスト
+eta_values_manual = [5, 10, 15, 20]  # 手動で指定するetaの値のリスト
 
 manual = True  # 手動設定する場合はTrue、CSVから自動取得する場合はFalse
 
@@ -117,8 +118,8 @@ for eta, count in sorted(eta_counts.items()):
     print(f"$\eta$ = {eta}: {count} unique data points")
 
 # 最小値、最大値、ステップを設定して結果をプロット
-y_min = None  # y軸の最小値 (Noneの場合自動設定)
-y_max = None  # y軸の最大値 (Noneの場合自動設定)
-y_step = 10  # y軸のステップ (指定する場合)
+y_min = 70  # y軸の最小値 (Noneの場合自動設定)
+y_max = 151  # y軸の最大値 (Noneの場合自動設定)
+y_step = 20  # y軸のステップ (指定する場合)
 
 plot_pareto_solution_counts(eta_counts, eta_values, y_min, y_max, y_step)

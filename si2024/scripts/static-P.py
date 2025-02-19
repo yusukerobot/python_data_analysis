@@ -28,11 +28,11 @@ with open(filename, newline='') as csv_file:
         priority_charge_data.append(float(row[4]))
 
 # グラフの設定
-# plt.rcParams["font.family"] = "TeX Gyre Termes"   # 使用するフォント
-# plt.rcParams["font.family"] = "MS Gothic"   # 使用するフォント
-font_path = "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"
-font_prop = FontProperties(fname=font_path)
-matplotlib.rcParams["font.family"] = font_prop.get_name()
+plt.rcParams["font.family"] = "TeX Gyre Termes"   # 使用するフォント
+# # plt.rcParams["font.family"] = "MS Gothic"   # 使用するフォント
+# font_path = "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"
+# font_prop = FontProperties(fname=font_path)
+# matplotlib.rcParams["font.family"] = font_prop.get_name()
 plt.rcParams["font.size"] = 35
 
 # グラフサイズの設定
@@ -50,8 +50,8 @@ plt.plot(task_data, priority_charge_data, linestyle='-', color='r', linewidth=4,
 # plt.scatter(time_data, priority_charge_data, color='r', s=20, label='Priority Charge')  # 赤色の散布図
 
 # 軸ラベルの設定
-plt.xlabel('作業回数 ［回］')
-plt.ylabel('優先度 $P$ [%/m]')
+plt.xlabel('Number of work [times]')
+plt.ylabel('$P$ [$\%$/m]')
 
 # グリッド非表示
 plt.grid(False)

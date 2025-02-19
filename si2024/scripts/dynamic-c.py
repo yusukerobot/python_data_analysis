@@ -28,10 +28,10 @@ with open(filename, newline='') as csv_file:
         cost_charge_data.append(float(row[8]))
 
 # グラフの設定
-# plt.rcParams["font.family"] = "TeX Gyre Termes"   # 使用するフォント
-font_path = "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"
-font_prop = FontProperties(fname=font_path)
-matplotlib.rcParams["font.family"] = font_prop.get_name()
+plt.rcParams["font.family"] = "TeX Gyre Termes"   # 使用するフォント
+# font_path = "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"
+# font_prop = FontProperties(fname=font_path)
+# matplotlib.rcParams["font.family"] = font_prop.get_name()
 plt.rcParams["font.size"] = 35
 
 # グラフサイズの設定
@@ -48,8 +48,8 @@ plt.plot(task_data, cost_charge_data, linestyle='-', color='r', linewidth=4, lab
 # plt.scatter(time_data, cost_short_data, color='b', s=20, label='Priority Short')  # 青色の散布図
 # plt.scatter(time_data, cost_charge_data, color='r', s=20, label='Priority Charge')  # 赤色の散布図
 # 軸ラベルの設定
-plt.xlabel('作業回数 ［回］')
-plt.ylabel('経路長 $c$ [m]')
+plt.xlabel('Number of work [times]')
+plt.ylabel('$C$ [m]')
 
 # グリッド非表示
 plt.grid(False)

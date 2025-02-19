@@ -6,13 +6,13 @@ import numpy as np
 # 描画設定
 plt.rcParams['mathtext.fontset'] = 'cm'
 plt.rcParams["font.family"] = "TeX Gyre Termes"
-plt.rcParams['font.size'] = 30
+plt.rcParams['font.size'] = 55
 
 # グラフサイズの設定
-width_cm = 16.5
+width_cm = 18.5
 height_cm = width_cm / 1.6
 width_inch = width_cm / 2.54
-height_inch = height_cm / 2.54
+height_inch = height_cm * 1.5 / 2.54
 
 # 第0世代データを取得する関数
 def get_initial_generation_data(file_path):
@@ -97,17 +97,17 @@ def plot_generation_scatter(initial_data, final_generation_data):
     plt.figure(figsize=(width_inch, height_inch))
 
     # 第0世代のデータを描画
-    if initial_data:
-        f1_values = [point[0] for point in initial_data]
-        f2_values = [point[1] for point in initial_data]
-        plt.scatter(
-            f1_values, f2_values,
-            label="Initial generation",
-            color='black',
-            marker='x',
-            linewidths=2,
-            s=80
-        )
+    # if initial_data:
+    #     f1_values = [point[0] for point in initial_data]
+    #     f2_values = [point[1] for point in initial_data]
+    #     plt.scatter(
+    #         f1_values, f2_values,
+    #         label="Initial generation",
+    #         color='black',
+    #         marker='x',
+    #         linewidths=2,
+    #         s=150
+    #     )
 
     # 各etaの最終世代データを描画
     for idx, (eta, data) in enumerate(sorted(final_generation_data.items())):
@@ -116,11 +116,11 @@ def plot_generation_scatter(initial_data, final_generation_data):
         
         plt.scatter(
             f1_values, f2_values, 
-            label=f"Pareto solution ($\eta$ = {eta})", 
+            label=f"$\eta$ = {eta}", 
             color=colors[idx % len(colors)], 
             marker=markers[idx % len(markers)], 
             linewidths=1,
-            s=80, 
+            s=150, 
             edgecolors='black'
         )
 
@@ -129,12 +129,12 @@ def plot_generation_scatter(initial_data, final_generation_data):
     plt.ylabel("$f_2$ [min]")
 
     # 軸範囲を設定
-    plt.xlim(103, 118)
+    plt.xlim(103.5, 114)
     plt.ylim(10, 24)
 
     # 軸目盛りを整数に設定
-    plt.xticks(np.arange(103, 118, 2))  # Y軸の目盛りを10から24まで2刻みで設定
-    plt.yticks(np.arange(11, 24, 2))  # Y軸の目盛りを10から24まで2刻みで設定
+    plt.xticks(np.arange(104, 114, 2))  # Y軸の目盛りを10から24まで2刻みで設定
+    plt.yticks(np.arange(11, 24, 6))  # Y軸の目盛りを10から24まで2刻みで設定
 
     # 凡例
     plt.legend(loc="best")
@@ -174,25 +174,25 @@ def plot_generation_scatter_with_time(final_generation_data):
                             color=color_marker['color'], 
                             marker=color_marker['marker'],
                             label=f"Number of charging: {time_count}",
-                            s=80, linewidths=1, edgecolors='black')
+                            s=150, linewidths=1, edgecolors='black')
 
     # 軸ラベル
     plt.xlabel("$f_1$ [min]")
     plt.ylabel("$f_2$ [min]")
 
     # 軸範囲を設定
-    plt.xlim(103, 118)
+    plt.xlim(103.5, 114)
     plt.ylim(10, 24)
 
     # 軸目盛りを整数に設定
-    plt.xticks(np.arange(103, 118, 2))  # X軸の目盛りを103から118まで2刻みで設定
-    plt.yticks(np.arange(11, 24, 2))  # Y軸の目盛りを11から24まで2刻みで設定
+    plt.xticks(np.arange(104, 112, 2))  # X軸の目盛りを103から118まで2刻みで設定
+    plt.yticks(np.arange(11, 24, 4))  # Y軸の目盛りを11から24まで2刻みで設定
 
     # 凡例（time_countの小さい順に並べ替えられた状態）
     handles, labels = plt.gca().get_legend_handles_labels()
     # 重複した凡例を削除
     by_label = dict(zip(labels, handles))
-    plt.legend(by_label.values(), by_label.keys(), loc="best")
+    plt.legend(by_label.values(), by_label.keys(), loc="best", fontsize=30)
     
     plt.tight_layout()
     plt.show()
@@ -206,7 +206,7 @@ file_pattern = "eta*.csv"          # 読み込むファイルのパターン
 manual_eta = True  # 手動でetaを設定する場合はTrue、それ以外は自動設定
 if manual_eta:
     # 手動で指定するetaの値（リスト）
-    eta_values = [1, 20]
+    eta_values = [5, 20]
     final_generation_data = get_final_generation_data(directory_path, file_pattern, eta_values=eta_values)
 else:
     print("Eta range specification is not supported for this script.")
@@ -220,4 +220,4 @@ initial_data = get_initial_generation_data(first_file)
 plot_generation_scatter(initial_data, final_generation_data)
 
 # 2つ目のグラフ（time_countによる色分けをしたグラフ）
-plot_generation_scatter_with_time(final_generation_data)
+# plot_generation_scatter_with_time(final_generation_data)

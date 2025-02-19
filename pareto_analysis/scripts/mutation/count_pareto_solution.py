@@ -5,7 +5,7 @@ from matplotlib.ticker import MaxNLocator
 # 描画設定
 plt.rcParams['mathtext.fontset'] = 'cm'
 plt.rcParams["font.family"] = "TeX Gyre Termes"
-plt.rcParams['font.size'] = 30
+plt.rcParams['font.size'] = 35
 
 # グラフサイズの設定
 width_cm = 16.5
@@ -63,7 +63,7 @@ def plot_pareto_solution_counts(eta_counts, eta_values, y_min=None, y_max=None, 
     
     # 折れ線グラフの描画
     plt.figure(figsize=(width_inch, height_inch))
-    plt.plot(eta_values_sorted, data_counts, marker='o', color='blue', label='Number of pareto solutions', linewidth=2, markersize=10)
+    plt.plot(eta_values_sorted, data_counts, marker='o', color='blue', label='Number of pareto solutions', linewidth=5, markersize=15)
 
     # 軸ラベルとタイトル
     plt.xlabel('$\eta$')
@@ -81,7 +81,8 @@ def plot_pareto_solution_counts(eta_counts, eta_values, y_min=None, y_max=None, 
     
     # y軸の目盛りのステップ数を指定（y_stepがNoneでない場合）
     if y_step is not None:
-        plt.gca().yaxis.set_major_locator(MaxNLocator(integer=True, prune='lower', steps=[y_step]))
+        plt.yticks(range(y_min, y_max, y_step))
+        # plt.gca().yaxis.set_major_locator(MaxNLocator(integer=True, prune='lower', steps=[y_step]))
     
     # 自動設定の場合はy軸の範囲をデータに基づいて設定
     elif y_min is None and y_max is None:
@@ -117,8 +118,8 @@ for eta, count in sorted(eta_counts.items()):
     print(f"$\eta$ = {eta}: {count} unique data points")
 
 # 最小値、最大値、ステップを設定して結果をプロット
-y_min = 69  # y軸の最小値 (Noneの場合自動設定)
-y_max = 150  # y軸の最大値 (Noneの場合自動設定)
-y_step = 5  # y軸のステップ (指定する場合)
+y_min = 70  # y軸の最小値 (Noneの場合自動設定)
+y_max = 151  # y軸の最大値 (Noneの場合自動設定)
+y_step = 20  # y軸のステップ (指定する場合)
 
 plot_pareto_solution_counts(eta_counts, eta_values, y_min, y_max, y_step)
